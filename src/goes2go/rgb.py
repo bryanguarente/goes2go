@@ -664,6 +664,40 @@ def DayCloudPhaseEUMETSAT(C, **kwargs):
 
     return rgb_as_dataset(C, RGB, "Day Cloud Phase EUMETSAT", **kwargs)
 
+def ArcticDayCloudPhase(C, **kwargs):
+    """
+    Day Cloud Type RGB:
+    (See `Quick Guide <https://youtu.be/WZaAh6h-M9A?si=Nb7oD5u1H27MRma5&t=1016>`__ for reference)
+
+    .. image:: /_static/ArcticDayCloudType.png
+
+    Parameters
+    ----------
+    C : xarray.Dataset
+        A GOES ABI multichannel file opened with xarray.
+    \*\*kwargs :
+        Keyword arguments for ``rgb_as_dataset`` function.
+        - latlon : derive latitude and longitude of each pixel
+
+    """
+    # Load the three channels into appropriate R, G, and B variables
+    R, G, B = load_RGB_channels(C, (4, 5, 5))
+
+    # Normalize each channel by the appropriate range of values. (Clipping happens inside function)
+    R = normalize(R, 0, .1)
+    G = normalize(G, .01, .59)
+    B = normalize(B, .01, .59)
+
+    # Apply the gamma correction to Red channel.
+    #   corrected_value = value^(1/gamma)
+    gamma = .66
+    R = gamma_correction(R, gamma)
+
+    # The final RGB array :)
+    RGB = np.dstack([R, G, B])
+
+    return rgb_as_dataset(C, RGB, "Day Cloud Type", **kwargs)
+
 def DayCloudType(C, **kwargs):
     """
     Day Cloud Type RGB:
