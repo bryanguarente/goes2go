@@ -773,11 +773,11 @@ class rgbAccessor:
         return ds["DayCloudPhaseEUMETSAT"]
 
     def ArcticDayCloudPhase(self):
-        """Create the Day Cloud Phase Type RGB.
+        """Create the Arctic Day Cloud Phase Type RGB.
 
         (See `Quick Guide <https://eumetrain.org/sites/default/files/2021-05/CloudTypeRGB.pdf>`__ for reference)
 
-        .. image:: /_static/DayCloudType.png
+        .. image:: /_static/ArcticDayCloudType.png
 
 
         """
@@ -799,14 +799,14 @@ class rgbAccessor:
         # The final RGB array :)
         RGB = np.dstack([R, G, B])
 
-        ds["DayCloudType"] = (("y", "x", "rgb"), RGB)
+        ds["ArcticDayCloudPhase"] = (("y", "x", "rgb"), RGB)
         ds["rgb"] = ["R", "G", "B"]
-        ds["DayCloudType"].attrs["Quick Guide"] = (
+        ds["ArcticDayCloudPhase"].attrs["Quick Guide"] = (
             "https://eumetrain.org/sites/default/files/2021-05/CloudTypeRGB.pdf"
         )
-        ds["DayCloudType"].attrs["long_name"] = "Arctic Day Cloud Phase"
+        ds["ArcticDayCloudPhase"].attrs["long_name"] = "Arctic Day Cloud Phase"
 
-        return ds["DayCloudType"]
+        return ds["ArcticDayCloudPhase"]
     
     def DayCloudType(self):
         """Create the Day Cloud Phase Type RGB.
