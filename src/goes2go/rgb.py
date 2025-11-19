@@ -684,7 +684,7 @@ def DayCloudType(C, **kwargs):
     R, G, B = load_RGB_channels(C, (4, 2, 5))
 
     # Normalize each channel by the appropriate range of values. (Clipping happens inside function)
-    R = normalize(R, 0, 1)
+    R = normalize(R, 0, .1)
     G = normalize(G, 0, .78)
     B = normalize(B, .01, .59)
 
