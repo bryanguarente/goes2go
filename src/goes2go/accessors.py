@@ -772,6 +772,42 @@ class rgbAccessor:
 
         return ds["DayCloudPhaseEUMETSAT"]
 
+    def ArcticDayCloudPhase(self):
+        """Create the Day Cloud Phase Type RGB.
+
+        (See `Quick Guide <https://eumetrain.org/sites/default/files/2021-05/CloudTypeRGB.pdf>`__ for reference)
+
+        .. image:: /_static/DayCloudType.png
+
+
+        """
+        ds = self._obj
+
+        # Load the three channels into appropriate R, G, and B variables
+        R, G, B = self._load_RGB_channels((4, 5, 5))
+
+        # _normalize each channel by the appropriate range of values. (Clipping happens inside function)
+        R = _normalize(R, 0, .1)
+        G = _normalize(G, .01, .59)
+        B = _normalize(B, .01, .59)
+
+        # Apply the gamma correction to Red channel.
+        #   corrected_value = value^(1/gamma)
+        gamma = .66
+        R = _gamma_correction(R, gamma)
+        
+        # The final RGB array :)
+        RGB = np.dstack([R, G, B])
+
+        ds["DayCloudType"] = (("y", "x", "rgb"), RGB)
+        ds["rgb"] = ["R", "G", "B"]
+        ds["DayCloudType"].attrs["Quick Guide"] = (
+            "https://eumetrain.org/sites/default/files/2021-05/CloudTypeRGB.pdf"
+        )
+        ds["DayCloudType"].attrs["long_name"] = "Arctic Day Cloud Phase"
+
+        return ds["DayCloudType"]
+    
     def DayCloudType(self):
         """Create the Day Cloud Phase Type RGB.
 
