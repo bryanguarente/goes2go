@@ -787,16 +787,14 @@ class rgbAccessor:
         R, G, B = self._load_RGB_channels((4, 2, 5))
 
         # _normalize each channel by the appropriate range of values. (Clipping happens inside function)
-        R = _normalize(R, 0, .1)
-        G = _normalize(G, 0, .8)
-        B = _normalize(B, 0, .8)
+        R = _normalize(R, 0, 1)
+        G = _normalize(G, 0, 1)
+        B = _normalize(B, 0, 1)
 
         # Apply the gamma correction to Red channel.
         #   corrected_value = value^(1/gamma)
-        gamma = 1.5
+        gamma = .66
         R = _gamma_correction(R, gamma)
-        gamma = .75
-        G = _gamma_correction(G, gamma)
         
         # The final RGB array :)
         RGB = np.dstack([R, G, B])
