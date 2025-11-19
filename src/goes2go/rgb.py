@@ -690,7 +690,7 @@ def DayCloudType(C, **kwargs):
 
     # Apply the gamma correction to Red channel.
     #   corrected_value = value^(1/gamma)
-    gamma = .66
+    gamma = 1/.66
     R = gamma_correction(R, gamma)
 
     # The final RGB array :)
