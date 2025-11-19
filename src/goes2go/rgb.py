@@ -684,16 +684,14 @@ def DayCloudType(C, **kwargs):
     R, G, B = load_RGB_channels(C, (4, 2, 5))
 
     # Normalize each channel by the appropriate range of values. (Clipping happens inside function)
-    R = normalize(R, 0, .1)
-    G = normalize(G, 0, .8)
-    B = normalize(B, 0, .8)
+    R = normalize(R, 0, 1)
+    G = normalize(G, 0, 1)
+    B = normalize(B, 0, 1)
 
     # Apply the gamma correction to Red channel.
     #   corrected_value = value^(1/gamma)
-    gamma = 1.5
+    gamma = .66
     R = gamma_correction(R, gamma)
-    gamma = .75
-    G = gamma_correction(G, gamma)
 
     # The final RGB array :)
     RGB = np.dstack([R, G, B])
