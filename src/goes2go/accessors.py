@@ -788,12 +788,12 @@ class rgbAccessor:
 
         # _normalize each channel by the appropriate range of values. (Clipping happens inside function)
         R = _normalize(R, 0, 1)
-        G = _normalize(G, 0, 1)
-        B = _normalize(B, 0, 1)
+        G = _normalize(G, 0, .78)
+        B = _normalize(B, .01, .59)
 
         # Apply the gamma correction to Red channel.
         #   corrected_value = value^(1/gamma)
-        gamma = 1/.66
+        gamma = .66
         R = _gamma_correction(R, gamma)
         
         # The final RGB array :)
