@@ -666,7 +666,7 @@ def DayCloudPhaseEUMETSAT(C, **kwargs):
 
 def ArcticDayCloudPhase(C, **kwargs):
     """
-    Day Cloud Type RGB:
+    Arctic Day Cloud Type RGB:
     (See `Quick Guide <https://youtu.be/WZaAh6h-M9A?si=Nb7oD5u1H27MRma5&t=1016>`__ for reference)
 
     .. image:: /_static/ArcticDayCloudType.png
@@ -696,7 +696,7 @@ def ArcticDayCloudPhase(C, **kwargs):
     # The final RGB array :)
     RGB = np.dstack([R, G, B])
 
-    return rgb_as_dataset(C, RGB, "Day Cloud Type", **kwargs)
+    return rgb_as_dataset(C, RGB, "Arctic Day Cloud Phase", **kwargs)
 
 def DayCloudType(C, **kwargs):
     """
