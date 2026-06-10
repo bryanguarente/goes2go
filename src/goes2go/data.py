@@ -33,6 +33,22 @@ from goes2go.tools import lat_lon_to_scan_angles
 # from the file ${HOME}/.config/goes2go/config.toml
 from . import config
 
+def reset_fs_cache():
+    """
+    Call this between loop iterations to clear s3fs connection cache.
+    Prevents accumulated S3 directory listings and open connections
+    from growing unboundedly across many calls to goes_nearesttime.
+    """
+    global _fs_instance, fs
+    if _fs_instance is not None:
+        try:
+            _fs_instance.invalidate_cache()
+            _fs_instance.clear_instance_cache()
+        except Exception:
+            pass
+    _fs_instance = s3fs.S3FileSystem(anon=True)
+    fs = _fs_instance
+
 # Connect to AWS public buckets
 def _get_fs(refresh=False):
     """
