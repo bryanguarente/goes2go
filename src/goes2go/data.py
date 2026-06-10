@@ -34,7 +34,25 @@ from goes2go.tools import lat_lon_to_scan_angles
 from . import config
 
 # Connect to AWS public buckets
-fs = s3fs.S3FileSystem(anon=True)
+def _get_fs(refresh=False):
+    """
+    Return the s3fs filesystem object. Pass refresh=True to discard
+    the cached instance and create a fresh one, which clears any
+    accumulated S3 directory listing cache and open connection state.
+    """
+    global _fs_instance
+    if _fs_instance is None or refresh:
+        if _fs_instance is not None:
+            try:
+                # Clear s3fs's internal directory listing cache
+                _fs_instance.invalidate_cache()
+            except Exception:
+                pass
+        _fs_instance = s3fs.S3FileSystem(anon=True)
+    return _fs_instance
+
+_fs_instance = None
+fs = _get_fs()  # initial instance — keeps backward compatibility
 
 # Define parameter options and aliases
 # ------------------------------------
